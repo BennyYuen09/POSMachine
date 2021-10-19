@@ -19,4 +19,9 @@ public class PosMachine {
         }
         return (String[])outputList.toArray();
     }
+
+    public ItemInfo getItemInfoFromDatabase(String barcode){
+        return ItemDataLoader.loadAllItemInfos().stream().
+                filter(itemInfo -> itemInfo.getBarcode().equals(barcode)).findFirst().orElse(null);
+    }
 }
