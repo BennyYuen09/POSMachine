@@ -47,4 +47,10 @@ public class PosMachine {
 
         return (ReceiptItemInfo[]) receiptItemInfoList.toArray();
     }
+
+    public String printItem(ReceiptItemInfo receiptItemInfo){
+        return ("Name: " + receiptItemInfo.getItemInfo().getName() + ", Quantity: " +
+                receiptItemInfo.getQuantity() + ", Unit price: " + receiptItemInfo.getItemInfo().getPrice() +
+                " (yuan),  Subtotal: " + receiptItemInfo.getTotalPrice());
+    }
 }
