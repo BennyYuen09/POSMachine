@@ -6,8 +6,10 @@ import java.util.List;
 
 public class PosMachine {
     public String printReceipt(List<String> barcodes) {
-
-        return null;
+        ReceiptItemInfo[] receiptItemInfoList = generateReceiptItemInfoList(barcodes.toArray(new String[0]));
+        String itemReceiptString = printAllItemOnReceipt(receiptItemInfoList);
+        String totalPriceReceiptString = printTotalPrice(receiptItemInfoList);
+        return itemReceiptString + totalPriceReceiptString;
     }
 
     public String[] generateDistinctItemList(String[] barcodeList){
