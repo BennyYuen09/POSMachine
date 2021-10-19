@@ -2,6 +2,7 @@ package pos.machine;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class PosMachine {
@@ -31,5 +32,19 @@ public class PosMachine {
             outputList.add(getItemInfoFromDatabase(barcode));
         }
         return (ItemInfo[]) outputList.toArray();
+    }
+
+    public ReceiptItemInfo[] generateReceiptItemInfoList(String[] barcodeList){
+        String [] distinctBarcodeList = generateDistinctItemList(barcodeList);
+        ItemInfo[] itemInfoList = generateItemInfoList(distinctBarcodeList);
+
+        List<ReceiptItemInfo> receiptItemInfoList = new ArrayList<>();
+        for (ItemInfo itemInfo: itemInfoList){
+            int quantity = (int)Arrays.stream(barcodeList).
+                    filter(barcode -> barcode.equals(itemInfo.getBarcode())).count();
+            receiptItemInfoList.add(new ReceiptItemInfo(itemInfo, quantity));
+        }
+
+        return (ReceiptItemInfo[]) receiptItemInfoList.toArray();
     }
 }
