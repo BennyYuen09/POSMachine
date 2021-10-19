@@ -24,4 +24,12 @@ public class PosMachine {
         return ItemDataLoader.loadAllItemInfos().stream().
                 filter(itemInfo -> itemInfo.getBarcode().equals(barcode)).findFirst().orElse(null);
     }
+
+    public ItemInfo[] generateItemInfoList(String[] distinctBarcodeList){
+        List<ItemInfo> outputList = new ArrayList<>();
+        for (String barcode : distinctBarcodeList){
+            outputList.add(getItemInfoFromDatabase(barcode));
+        }
+        return (ItemInfo[]) outputList.toArray();
+    }
 }
