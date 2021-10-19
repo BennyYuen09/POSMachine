@@ -1,6 +1,5 @@
 package pos.machine;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,11 +13,11 @@ public class PosMachine {
     public String[] generateDistinctItemList(String[] barcodeList){
         List<String> outputList = new ArrayList<>();
         for (String barcode : barcodeList){
-            if (!java.util.Arrays.stream(outputList.toArray()).anyMatch(barcode::equals)){
+            if (Arrays.stream(outputList.toArray()).noneMatch(barcode::equals)){
                 outputList.add(barcode);
             }
         }
-        return (String[])outputList.toArray();
+        return outputList.toArray(new String[0]);
     }
 
     public ItemInfo getItemInfoFromDatabase(String barcode){
@@ -31,7 +30,7 @@ public class PosMachine {
         for (String barcode : distinctBarcodeList){
             outputList.add(getItemInfoFromDatabase(barcode));
         }
-        return (ItemInfo[]) outputList.toArray();
+        return outputList.toArray(new ItemInfo[0]);
     }
 
     public ReceiptItemInfo[] generateReceiptItemInfoList(String[] barcodeList){
@@ -45,7 +44,7 @@ public class PosMachine {
             receiptItemInfoList.add(new ReceiptItemInfo(itemInfo, quantity));
         }
 
-        return (ReceiptItemInfo[]) receiptItemInfoList.toArray();
+        return receiptItemInfoList.toArray(new ReceiptItemInfo[0]);
     }
 
     public String printItem(ReceiptItemInfo receiptItemInfo){
@@ -63,5 +62,15 @@ public class PosMachine {
         }
         output.append("----------------------\n");
         return output.toString();
+    }
+
+    public String printTotalPrice(ReceiptItemInfo[] receiptItemInfoList){
+        int totalPrice = 0;
+        for (ReceiptItemInfo receiptItemInfo : receiptItemInfoList){
+            totalPrice += receiptItemInfo.getTotalPrice();
+        }
+        String output = ("Total: " + totalPrice + " (yuan)\n");
+        output += "**********************";
+        return output;
     }
 }
