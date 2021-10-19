@@ -53,4 +53,15 @@ public class PosMachine {
                 receiptItemInfo.getQuantity() + ", Unit price: " + receiptItemInfo.getItemInfo().getPrice() +
                 " (yuan),  Subtotal: " + receiptItemInfo.getTotalPrice());
     }
+
+    public String printAllItemOnReceipt(ReceiptItemInfo[] receiptItemInfoList){
+        StringBuilder output = new StringBuilder();
+        output.append("***<store earning no money>Receipt***\n");
+        for (ReceiptItemInfo receiptItemInfo : receiptItemInfoList){
+            output.append(printItem(receiptItemInfo));
+            output.append("\n");
+        }
+        output.append("----------------------\n");
+        return output.toString();
+    }
 }
